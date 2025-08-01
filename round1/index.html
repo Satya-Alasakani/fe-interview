@@ -141,6 +141,40 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            user-select: none;
+        }
+
+        .subsection-title:hover {
+            background: #edf2f7;
+            transform: translateY(-1px);
+        }
+
+        .subsection-title::after {
+            content: '▼';
+            margin-left: auto;
+            transition: transform 0.2s ease;
+            font-size: 0.8rem;
+            color: #718096;
+        }
+
+        .subsection-title.collapsed::after {
+            transform: rotate(-90deg);
+        }
+
+        .subsection-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .subsection-content.collapsed {
+            max-height: 0;
+        }
+
+        .subsection-content.expanded {
+            max-height: 2000px;
         }
         
         .question-block {
@@ -394,185 +428,193 @@
 
                     <!-- HTML Basics -->
                     <div class="subsection">
-                        <h3 class="subsection-title">
+                        <h3 class="subsection-title collapsed" onclick="toggleSubsection(this)">
                             <span>📄</span> HTML Basics
                         </h3>
                         
-                        <div class="question-block">
-                            <div class="question">Difference between &lt;div&gt; and &lt;span&gt;</div>
-                            <div class="answer">
-                                • <strong>&lt;div&gt;</strong> → Block-level, takes full width, starts on new line<br>
-                                • <strong>&lt;span&gt;</strong> → Inline, does not break line<br>
-                                • <strong>Use case:</strong> Layout containers vs inline text styling
+                        <div class="subsection-content collapsed">
+                            <div class="question-block">
+                                <div class="question">Difference between &lt;div&gt; and &lt;span&gt;</div>
+                                <div class="answer">
+                                    • <strong>&lt;div&gt;</strong> → Block-level, takes full width, starts on new line<br>
+                                    • <strong>&lt;span&gt;</strong> → Inline, does not break line<br>
+                                    • <strong>Use case:</strong> Layout containers vs inline text styling
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">What are semantic tags in HTML and why are they important?</div>
-                            <div class="answer">
-                                • <strong>Examples:</strong> &lt;header&gt;, &lt;footer&gt;, &lt;article&gt;, &lt;section&gt;<br>
-                                • <strong>Benefits:</strong> Improves readability, SEO, and accessibility
+                            <div class="question-block">
+                                <div class="question">What are semantic tags in HTML and why are they important?</div>
+                                <div class="answer">
+                                    • <strong>Examples:</strong> &lt;header&gt;, &lt;footer&gt;, &lt;article&gt;, &lt;section&gt;<br>
+                                    • <strong>Benefits:</strong> Improves readability, SEO, and accessibility
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Difference between relative and absolute paths in HTML</div>
-                            <div class="answer">
-                                • <strong>Relative:</strong> Based on current file location<br>
-                                • <strong>Absolute:</strong> Full URL or from root
+                            <div class="question-block">
+                                <div class="question">Difference between relative and absolute paths in HTML</div>
+                                <div class="answer">
+                                    • <strong>Relative:</strong> Based on current file location<br>
+                                    • <strong>Absolute:</strong> Full URL or from root
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">What are data attributes and when to use them?</div>
-                            <div class="answer">
-                                • Attributes like <code>data-id="123"</code><br>
-                                • Store extra information without extra classes or IDs
+                            <div class="question-block">
+                                <div class="question">What are data attributes and when to use them?</div>
+                                <div class="answer">
+                                    • Attributes like <code>data-id="123"</code><br>
+                                    • Store extra information without extra classes or IDs
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- CSS Basics -->
                     <div class="subsection">
-                        <h3 class="subsection-title">
+                        <h3 class="subsection-title collapsed" onclick="toggleSubsection(this)">
                             <span>🎨</span> CSS Basics
                         </h3>
                         
-                        <div class="question-block">
-                            <div class="question">Explain the CSS box model</div>
-                            <div class="answer">
-                                Content → Padding → Border → Margin<br>
-                                Defines spacing and element sizing
+                        <div class="subsection-content collapsed">
+                            <div class="question-block">
+                                <div class="question">Explain the CSS box model</div>
+                                <div class="answer">
+                                    Content → Padding → Border → Margin<br>
+                                    Defines spacing and element sizing
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Difference between inline, block, and inline-block elements</div>
-                            <div class="answer">
-                                • <strong>block:</strong> Full width, new line (&lt;div&gt;)<br>
-                                • <strong>inline:</strong> Width = content (&lt;span&gt;)<br>
-                                • <strong>inline-block:</strong> Inline but allows width/height
+                            <div class="question-block">
+                                <div class="question">Difference between inline, block, and inline-block elements</div>
+                                <div class="answer">
+                                    • <strong>block:</strong> Full width, new line (&lt;div&gt;)<br>
+                                    • <strong>inline:</strong> Width = content (&lt;span&gt;)<br>
+                                    • <strong>inline-block:</strong> Inline but allows width/height
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Difference between position: relative, absolute, fixed, and sticky</div>
-                            <div class="answer">
-                                • <strong>relative:</strong> Position relative to normal flow<br>
-                                • <strong>absolute:</strong> Relative to first positioned ancestor<br>
-                                • <strong>fixed:</strong> Relative to viewport<br>
-                                • <strong>sticky:</strong> Relative, then sticks on scroll
+                            <div class="question-block">
+                                <div class="question">Difference between position: relative, absolute, fixed, and sticky</div>
+                                <div class="answer">
+                                    • <strong>relative:</strong> Position relative to normal flow<br>
+                                    • <strong>absolute:</strong> Relative to first positioned ancestor<br>
+                                    • <strong>fixed:</strong> Relative to viewport<br>
+                                    • <strong>sticky:</strong> Relative, then sticks on scroll
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Explain CSS specificity and its calculation</div>
-                            <div class="answer">
-                                Inline styles (1000) &gt; IDs (100) &gt; Classes/Attributes (10) &gt; Elements (1)
+                            <div class="question-block">
+                                <div class="question">Explain CSS specificity and its calculation</div>
+                                <div class="answer">
+                                    Inline styles (1000) &gt; IDs (100) &gt; Classes/Attributes (10) &gt; Elements (1)
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- JavaScript Basics -->
                     <div class="subsection">
-                        <h3 class="subsection-title">
+                        <h3 class="subsection-title collapsed" onclick="toggleSubsection(this)">
                             <span>⚡</span> JavaScript Basics
                         </h3>
                         
-                        <div class="question-block">
-                            <div class="question">Difference between == and ===</div>
-                            <div class="answer">
-                                • <strong>==:</strong> Loose equality (type conversion)<br>
-                                • <strong>===:</strong> Strict equality (no conversion)
+                        <div class="subsection-content collapsed">
+                            <div class="question-block">
+                                <div class="question">Difference between == and ===</div>
+                                <div class="answer">
+                                    • <strong>==:</strong> Loose equality (type conversion)<br>
+                                    • <strong>===:</strong> Strict equality (no conversion)
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Explain hoisting for var, let, and const</div>
-                            <div class="answer">
-                                • <strong>var:</strong> Hoisted as undefined<br>
-                                • <strong>let/const:</strong> Hoisted but in Temporal Dead Zone
+                            <div class="question-block">
+                                <div class="question">Explain hoisting for var, let, and const</div>
+                                <div class="answer">
+                                    • <strong>var:</strong> Hoisted as undefined<br>
+                                    • <strong>let/const:</strong> Hoisted but in Temporal Dead Zone
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">What is event bubbling and event delegation?</div>
-                            <div class="answer">
-                                • <strong>Bubbling:</strong> Event goes child → parent<br>
-                                • <strong>Delegation:</strong> Parent handles child events efficiently
+                            <div class="question-block">
+                                <div class="question">What is event bubbling and event delegation?</div>
+                                <div class="answer">
+                                    • <strong>Bubbling:</strong> Event goes child → parent<br>
+                                    • <strong>Delegation:</strong> Parent handles child events efficiently
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Difference between function declaration and function expression</div>
-                            <div class="answer">
-                                • <strong>Declaration:</strong> Hoisted, callable before definition<br>
-                                • <strong>Expression:</strong> Not hoisted
+                            <div class="question-block">
+                                <div class="question">Difference between function declaration and function expression</div>
+                                <div class="answer">
+                                    • <strong>Declaration:</strong> Hoisted, callable before definition<br>
+                                    • <strong>Expression:</strong> Not hoisted
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Explain 'this' in normal vs arrow functions</div>
-                            <div class="answer">
-                                • <strong>Normal:</strong> 'this' depends on caller<br>
-                                • <strong>Arrow:</strong> 'this' is lexical (from parent scope)
+                            <div class="question-block">
+                                <div class="question">Explain 'this' in normal vs arrow functions</div>
+                                <div class="answer">
+                                    • <strong>Normal:</strong> 'this' depends on caller<br>
+                                    • <strong>Arrow:</strong> 'this' is lexical (from parent scope)
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Browser Storage & API Basics -->
                     <div class="subsection">
-                        <h3 class="subsection-title">
+                        <h3 class="subsection-title collapsed" onclick="toggleSubsection(this)">
                             <span>💾</span> Browser Storage & API Basics
                         </h3>
                         
-                        <div class="question-block">
-                            <div class="question">Difference between cookies, localStorage, and sessionStorage</div>
-                            <table class="comparison-table">
-                                <tr>
-                                    <th>Storage Type</th>
-                                    <th>Size Limit</th>
-                                    <th>Persistence</th>
-                                    <th>Server Access</th>
-                                </tr>
-                                <tr>
-                                    <td>Cookies</td>
-                                    <td>4KB</td>
-                                    <td>Expire manually</td>
-                                    <td>Sent to server</td>
-                                </tr>
-                                <tr>
-                                    <td>localStorage</td>
-                                    <td>5-10MB</td>
-                                    <td>Persistent</td>
-                                    <td>Browser-only</td>
-                                </tr>
-                                <tr>
-                                    <td>sessionStorage</td>
-                                    <td>5-10MB</td>
-                                    <td>Clears on tab close</td>
-                                    <td>Browser-only</td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <div class="question-block">
-                            <div class="question">Difference between GET and POST requests</div>
-                            <div class="answer">
-                                • <strong>GET:</strong> URL params, cached, idempotent<br>
-                                • <strong>POST:</strong> Request body, create/update
+                        <div class="subsection-content collapsed">
+                            <div class="question-block">
+                                <div class="question">Difference between cookies, localStorage, and sessionStorage</div>
+                                <table class="comparison-table">
+                                    <tr>
+                                        <th>Storage Type</th>
+                                        <th>Size Limit</th>
+                                        <th>Persistence</th>
+                                        <th>Server Access</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Cookies</td>
+                                        <td>4KB</td>
+                                        <td>Expire manually</td>
+                                        <td>Sent to server</td>
+                                    </tr>
+                                    <tr>
+                                        <td>localStorage</td>
+                                        <td>5-10MB</td>
+                                        <td>Persistent</td>
+                                        <td>Browser-only</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sessionStorage</td>
+                                        <td>5-10MB</td>
+                                        <td>Clears on tab close</td>
+                                        <td>Browser-only</td>
+                                    </tr>
+                                </table>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">How would you handle API errors in frontend?</div>
-                            <div class="code-block">
+                            <div class="question-block">
+                                <div class="question">Difference between GET and POST requests</div>
+                                <div class="answer">
+                                    • <strong>GET:</strong> URL params, cached, idempotent<br>
+                                    • <strong>POST:</strong> Request body, create/update
+                                </div>
+                            </div>
+
+                            <div class="question-block">
+                                <div class="question">How would you handle API errors in frontend?</div>
+                                <div class="code-block">
 <span class="code-keyword">try</span> {
   <span class="code-keyword">const</span> res = <span class="code-keyword">await</span> fetch(<span class="code-string">'/api/data'</span>);
   <span class="code-keyword">if</span>(!res.ok) <span class="code-keyword">throw new</span> Error(<span class="code-string">'Failed'</span>);
 } <span class="code-keyword">catch</span>(err) {
   alert(err.message);
 }
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -593,107 +635,112 @@
 
                     <!-- Easy Problems -->
                     <div class="subsection">
-                        <h3 class="subsection-title">
+                        <h3 class="subsection-title collapsed" onclick="toggleSubsection(this)">
                             <span>🟢</span> Easy Level
                         </h3>
                         
-                        <div class="question-block">
-                            <div class="question">Palindrome check</div>
-                            <div class="code-block">
+                        <div class="subsection-content collapsed">
+                            <div class="question-block">
+                                <div class="question">Palindrome check</div>
+                                <div class="code-block">
 <span class="code-keyword">function</span> isPalindrome(str) {
   str = str.toLowerCase();
   <span class="code-keyword">return</span> str === str.split(<span class="code-string">''</span>).reverse().join(<span class="code-string">''</span>);
 }
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Remove duplicates from array</div>
-                            <div class="code-block">
+                            <div class="question-block">
+                                <div class="question">Remove duplicates from array</div>
+                                <div class="code-block">
 <span class="code-keyword">function</span> uniqueArray(arr) {
   <span class="code-keyword">return</span> arr.filter((v, i) => arr.indexOf(v) === i);
 }
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Reverse a string</div>
-                            <div class="code-block">
+                            <div class="question-block">
+                                <div class="question">Reverse a string</div>
+                                <div class="code-block">
 <span class="code-keyword">function</span> reverseString(str) {
   <span class="code-keyword">return</span> str.split(<span class="code-string">''</span>).reverse().join(<span class="code-string">''</span>);
 }
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Count vowels in a string</div>
-                            <div class="code-block">
+                            <div class="question-block">
+                                <div class="question">Count vowels in a string</div>
+                                <div class="code-block">
 <span class="code-keyword">function</span> countVowels(str) {
   <span class="code-keyword">return</span> (str.match(<span class="code-string">/[aeiou]/gi</span>) || []).length;
 }
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Medium Problems -->
                     <div class="subsection">
-                        <h3 class="subsection-title">
+                        <h3 class="subsection-title collapsed" onclick="toggleSubsection(this)">
                             <span>🟡</span> Medium Level
                         </h3>
                         
-                        <div class="question-block">
-                            <div class="question">First non-repeating character</div>
-                            <div class="code-block">
+                        <div class="subsection-content collapsed">
+                            <div class="question-block">
+                                <div class="question">First non-repeating character</div>
+                                <div class="code-block">
 <span class="code-keyword">function</span> firstUniqueChar(str) {
   <span class="code-keyword">for</span>(<span class="code-keyword">let</span> ch <span class="code-keyword">of</span> str) {
     <span class="code-keyword">if</span>(str.indexOf(ch) === str.lastIndexOf(ch)) <span class="code-keyword">return</span> ch;
   }
   <span class="code-keyword">return null</span>;
 }
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Rotate array by k positions</div>
-                            <div class="code-block">
+                            <div class="question-block">
+                                <div class="question">Rotate array by k positions</div>
+                                <div class="code-block">
 <span class="code-keyword">function</span> rotateArray(arr, k) {
   k %= arr.length;
   <span class="code-keyword">return</span> arr.slice(-k).concat(arr.slice(<span class="code-keyword">0</span>, -k));
 }
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Flatten nested array</div>
-                            <div class="code-block">
+                            <div class="question-block">
+                                <div class="question">Flatten nested array</div>
+                                <div class="code-block">
 <span class="code-keyword">function</span> flatten(arr) {
   <span class="code-keyword">return</span> arr.flat(Infinity);
 }
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Advanced Problems -->
                     <div class="subsection">
-                        <h3 class="subsection-title">
+                        <h3 class="subsection-title collapsed" onclick="toggleSubsection(this)">
                             <span>🔴</span> Advanced Level
                         </h3>
                         
-                        <div class="question-block">
-                            <div class="question">Group array of objects by key</div>
-                            <div class="code-block">
+                        <div class="subsection-content collapsed">
+                            <div class="question-block">
+                                <div class="question">Group array of objects by key</div>
+                                <div class="code-block">
 <span class="code-keyword">function</span> groupBy(arr, key) {
   <span class="code-keyword">return</span> arr.reduce((acc, obj) => {
     (acc[obj[key]] = acc[obj[key]] || []).push(obj.name);
     <span class="code-keyword">return</span> acc;
   }, {});
 }
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Merge overlapping intervals</div>
-                            <div class="code-block">
+                            <div class="question-block">
+                                <div class="question">Merge overlapping intervals</div>
+                                <div class="code-block">
 <span class="code-keyword">function</span> mergeIntervals(intervals) {
   intervals.sort((a,b) => a[<span class="code-keyword">0</span>]-b[<span class="code-keyword">0</span>]);
   <span class="code-keyword">const</span> result = [intervals[<span class="code-keyword">0</span>]];
@@ -704,12 +751,12 @@
   }
   <span class="code-keyword">return</span> result;
 }
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Deep clone an object</div>
-                            <div class="code-block">
+                            <div class="question-block">
+                                <div class="question">Deep clone an object</div>
+                                <div class="code-block">
 <span class="code-keyword">function</span> deepClone(obj) {
   <span class="code-keyword">if</span>(obj === <span class="code-keyword">null</span> || <span class="code-keyword">typeof</span> obj !== <span class="code-string">'object'</span>) <span class="code-keyword">return</span> obj;
   <span class="code-keyword">if</span>(Array.isArray(obj)) <span class="code-keyword">return</span> obj.map(deepClone);
@@ -717,6 +764,7 @@
   <span class="code-keyword">for</span>(<span class="code-keyword">let</span> key <span class="code-keyword">in</span> obj) clone[key] = deepClone(obj[key]);
   <span class="code-keyword">return</span> clone;
 }
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -745,13 +793,14 @@
 
                     <!-- Advanced JavaScript -->
                     <div class="subsection">
-                        <h3 class="subsection-title">
+                        <h3 class="subsection-title collapsed" onclick="toggleSubsection(this)">
                             <span>🚀</span> Advanced JavaScript
                         </h3>
                         
-                        <div class="question-block">
-                            <div class="question">Explain closures with example</div>
-                            <div class="code-block">
+                        <div class="subsection-content collapsed">
+                            <div class="question-block">
+                                <div class="question">Explain closures with example</div>
+                                <div class="code-block">
 <span class="code-keyword">function</span> counter() {
   <span class="code-keyword">let</span> count = <span class="code-keyword">0</span>;
   <span class="code-keyword">return</span> () => ++count;
@@ -759,105 +808,112 @@
 <span class="code-keyword">const</span> c = counter();
 c(); <span class="code-comment">// 1</span>
 c(); <span class="code-comment">// 2</span>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Explain prototypal inheritance</div>
-                            <div class="answer">
-                                Objects inherit properties via prototype chain using Object.create() or class syntax.
+                            <div class="question-block">
+                                <div class="question">Explain prototypal inheritance</div>
+                                <div class="answer">
+                                    Objects inherit properties via prototype chain using Object.create() or class syntax.
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Promise.all vs Promise.allSettled vs Promise.race</div>
-                            <div class="answer">
-                                • <strong>Promise.all:</strong> Fails fast on first rejection<br>
-                                • <strong>Promise.allSettled:</strong> Waits for all to settle (success or fail)<br>
-                                • <strong>Promise.race:</strong> Resolves/rejects with the first settled promise
+                            <div class="question-block">
+                                <div class="question">Promise.all vs Promise.allSettled vs Promise.race</div>
+                                <div class="answer">
+                                    • <strong>Promise.all:</strong> Fails fast on first rejection<br>
+                                    • <strong>Promise.allSettled:</strong> Waits for all to settle (success or fail)<br>
+                                    • <strong>Promise.race:</strong> Resolves/rejects with the first settled promise
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Debugging & Browser -->
                     <div class="subsection">
-                        <h3 class="subsection-title">
+                        <h3 class="subsection-title collapsed" onclick="toggleSubsection(this)">
                             <span>🔍</span> Debugging & Browser
                         </h3>
                         
-                        <div class="question-block">
-                            <div class="question">How to debug memory leaks in SPA</div>
-                            <div class="answer">
-                                Chrome DevTools → Memory tab → Record Heap Snapshots → Check for detached DOM nodes
+                        <div class="subsection-content collapsed">
+                            <div class="question-block">
+                                <div class="question">How to debug memory leaks in SPA</div>
+                                <div class="answer">
+                                    Chrome DevTools → Memory tab → Record Heap Snapshots → Check for detached DOM nodes
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">How to debug slow rendering page</div>
-                            <div class="answer">
-                                Performance tab → Record → Look for long tasks, layout shifts, and reflows
+                            <div class="question-block">
+                                <div class="question">How to debug slow rendering page</div>
+                                <div class="answer">
+                                    Performance tab → Record → Look for long tasks, layout shifts, and reflows
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">Difference between repaint and reflow</div>
-                            <div class="answer">
-                                • <strong>Repaint:</strong> Visual change without layout change<br>
-                                • <strong>Reflow:</strong> Layout recalculation (heavier)
+                            <div class="question-block">
+                                <div class="question">Difference between repaint and reflow</div>
+                                <div class="answer">
+                                    • <strong>Repaint:</strong> Visual change without layout change<br>
+                                    • <strong>Reflow:</strong> Layout recalculation (heavier)
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Performance -->
                     <div class="subsection">
-                        <h3 class="subsection-title">
+                        <h3 class="subsection-title collapsed" onclick="toggleSubsection(this)">
                             <span>⚡</span> Performance
                         </h3>
                         
-                        <div class="key-concepts">
-                            <div class="concept-card">
-                                <div class="concept-title">CDN Performance</div>
-                                <div>Serves content from closest server, reduces latency</div>
-                            </div>
-                            <div class="concept-card">
-                                <div class="concept-title">Lazy Loading</div>
-                                <div>Loading components/images only when needed to reduce initial load time</div>
-                            </div>
-                            <div class="concept-card">
-                                <div class="concept-title">Service Workers</div>
-                                <div>Scripts running in background for caching/offline support</div>
-                            </div>
-                            <div class="concept-card">
-                                <div class="concept-title">Cache Busting</div>
-                                <div>Use versioned/hash filenames like app.123.js to ensure users get new versions</div>
+                        <div class="subsection-content collapsed">
+                            <div class="key-concepts">
+                                <div class="concept-card">
+                                    <div class="concept-title">CDN Performance</div>
+                                    <div>Serves content from closest server, reduces latency</div>
+                                </div>
+                                <div class="concept-card">
+                                    <div class="concept-title">Lazy Loading</div>
+                                    <div>Loading components/images only when needed to reduce initial load time</div>
+                                </div>
+                                <div class="concept-card">
+                                    <div class="concept-title">Service Workers</div>
+                                    <div>Scripts running in background for caching/offline support</div>
+                                </div>
+                                <div class="concept-card">
+                                    <div class="concept-title">Cache Busting</div>
+                                    <div>Use versioned/hash filenames like app.123.js to ensure users get new versions</div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Security -->
                     <div class="subsection">
-                        <h3 class="subsection-title">
+                        <h3 class="subsection-title collapsed" onclick="toggleSubsection(this)">
                             <span>🔒</span> Security
                         </h3>
                         
-                        <div class="question-block">
-                            <div class="question">How to prevent XSS</div>
-                            <div class="answer">
-                                Escape user input, use Content Security Policy (CSP)
+                        <div class="subsection-content collapsed">
+                            <div class="question-block">
+                                <div class="question">How to prevent XSS</div>
+                                <div class="answer">
+                                    Escape user input, use Content Security Policy (CSP)
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">How to prevent CSRF</div>
-                            <div class="answer">
-                                Use same-site cookies or anti-CSRF tokens
+                            <div class="question-block">
+                                <div class="question">How to prevent CSRF</div>
+                                <div class="answer">
+                                    Use same-site cookies or anti-CSRF tokens
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="question-block">
-                            <div class="question">How to handle CORS errors</div>
-                            <div class="answer">
-                                Set proper Access-Control-Allow-Origin headers or use proxy servers
+                            <div class="question-block">
+                                <div class="question">How to handle CORS errors</div>
+                                <div class="answer">
+                                    Set proper Access-Control-Allow-Origin headers or use proxy servers
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -979,6 +1035,24 @@ c(); <span class="code-comment">// 2</span>
             }
             
             updateOutput(output);
+        }
+
+        // Collapsible subsection functionality
+        function toggleSubsection(titleElement) {
+            const content = titleElement.nextElementSibling;
+            const isCollapsed = titleElement.classList.contains('collapsed');
+            
+            if (isCollapsed) {
+                // Expand
+                titleElement.classList.remove('collapsed');
+                content.classList.remove('collapsed');
+                content.classList.add('expanded');
+            } else {
+                // Collapse
+                titleElement.classList.add('collapsed');
+                content.classList.remove('expanded');
+                content.classList.add('collapsed');
+            }
         }
     </script>
 </body>
