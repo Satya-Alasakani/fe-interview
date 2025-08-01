@@ -21,27 +21,34 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #7d7d7d 0%, #4ba28b 100%);
             color: white;
-            padding: 30px;
+            padding: 40px;
+            border-radius: 20px;
             text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
-
+        
         .header h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
         }
-
+        
         .header p {
             font-size: 1.1rem;
             opacity: 0.9;
+        }
+
+        .tab-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
 
         .section {
@@ -141,92 +148,94 @@
             <p>Complete the following tasks to demonstrate your frontend development skills</p>
         </div>
 
-        <div class="section">
-            <h2 class="section-title">
-                <span class="section-icon">🎨</span>
-                CSS Layout & Styling Tasks
-            </h2>
-            <div class="questions-grid">
-                <div class="question-card">
-                    <div class="difficulty easy">Easy</div>
-                    <div class="question-title">Q1: Pricing Card Layout</div>
-                    <div class="question-desc">
-                        Create a responsive pricing card layout with 3 plans in a row. 
-                        Highlight the "Recommended" plan with a special badge and styling.
+        <div class="tab-container">
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">🎨</span>
+                    CSS Layout & Styling Tasks
+                </h2>
+                <div class="questions-grid">
+                    <div class="question-card">
+                        <div class="difficulty easy">Easy</div>
+                        <div class="question-title">Q1: Pricing Card Layout</div>
+                        <div class="question-desc">
+                            Create a responsive pricing card layout with 3 plans in a row. 
+                            Highlight the "Recommended" plan with a special badge and styling.
+                        </div>
+                        <div class="time-estimate">⏱️ Estimated time: 20 minutes</div>
+                        <a href="css-pricing-cards.html" class="question-link">Start Task</a>
                     </div>
-                    <div class="time-estimate">⏱️ Estimated time: 20 minutes</div>
-                    <a href="css-pricing-cards.html" class="question-link">Start Task</a>
-                </div>
-                
-                <div class="question-card">
-                    <div class="difficulty medium">Medium</div>
-                    <div class="question-title">Q2: Kanban Board Layout</div>
-                    <div class="question-desc">
-                        Build a Kanban Board layout with columns for "To Do", "In Progress", and "Done". 
-                        Apply color-coded headers and drag-and-drop styling.
+                    
+                    <div class="question-card">
+                        <div class="difficulty medium">Medium</div>
+                        <div class="question-title">Q2: Kanban Board Layout</div>
+                        <div class="question-desc">
+                            Build a Kanban Board layout with columns for "To Do", "In Progress", and "Done". 
+                            Apply color-coded headers and drag-and-drop styling.
+                        </div>
+                        <div class="time-estimate">⏱️ Estimated time: 25 minutes</div>
+                        <a href="css-kanban-board.html" class="question-link">Start Task</a>
                     </div>
-                    <div class="time-estimate">⏱️ Estimated time: 25 minutes</div>
-                    <a href="css-kanban-board.html" class="question-link">Start Task</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">
-                <span class="section-icon">⚛️</span>
-                Framework & Component Tasks
-            </h2>
-            <div class="questions-grid">
-                <div class="question-card">
-                    <div class="difficulty medium">Medium</div>
-                    <div class="question-title">Q1: File Manager Interface</div>
-                    <div class="question-desc">
-                        Create a File Manager page with sidebar folder tree and main grid view. 
-                        Include checkbox selection, toolbar actions, and component breakdown.
-                    </div>
-                    <div class="time-estimate">⏱️ Estimated time: 35 minutes</div>
-                    <a href="framework-file-manager.html" class="question-link">Start Task</a>
-                </div>
-                
-                <div class="question-card">
-                    <div class="difficulty medium">Medium</div>
-                    <div class="question-title">Q2: Order History Page</div>
-                    <div class="question-desc">
-                        Implement an Order History page with sidebar filters and paginated order list. 
-                        Design the component structure and API endpoints.
-                    </div>
-                    <div class="time-estimate">⏱️ Estimated time: 30 minutes</div>
-                    <a href="framework-order-history.html" class="question-link">Start Task</a>
                 </div>
             </div>
-        </div>
 
-        <div class="section">
-            <h2 class="section-title">
-                <span class="section-icon">🧠</span>
-                JavaScript & Data Structure Tasks
-            </h2>
-            <div class="questions-grid">
-                <div class="question-card">
-                    <div class="difficulty hard">Hard</div>
-                    <div class="question-title">Q1: Privilege Management System</div>
-                    <div class="question-desc">
-                        Build a privilege management system with dependent permissions. 
-                        Handle parent-child relationships and automatic state synchronization.
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">⚛️</span>
+                    Framework & Component Tasks
+                </h2>
+                <div class="questions-grid">
+                    <div class="question-card">
+                        <div class="difficulty medium">Medium</div>
+                        <div class="question-title">Q1: File Manager Interface</div>
+                        <div class="question-desc">
+                            Create a File Manager page with sidebar folder tree and main grid view. 
+                            Include checkbox selection, toolbar actions, and component breakdown.
+                        </div>
+                        <div class="time-estimate">⏱️ Estimated time: 35 minutes</div>
+                        <a href="framework-file-manager.html" class="question-link">Start Task</a>
                     </div>
-                    <div class="time-estimate">⏱️ Estimated time: 40 minutes</div>
-                    <a href="js-privilege-management.html" class="question-link">Start Task</a>
+                    
+                    <div class="question-card">
+                        <div class="difficulty medium">Medium</div>
+                        <div class="question-title">Q2: Order History Page</div>
+                        <div class="question-desc">
+                            Implement an Order History page with sidebar filters and paginated order list. 
+                            Design the component structure and API endpoints.
+                        </div>
+                        <div class="time-estimate">⏱️ Estimated time: 30 minutes</div>
+                        <a href="framework-order-history.html" class="question-link">Start Task</a>
+                    </div>
                 </div>
-                
-                <div class="question-card">
-                    <div class="difficulty hard">Hard</div>
-                    <div class="question-title">Q2: Client-Side Logger with Batching</div>
-                    <div class="question-desc">
-                        Implement an efficient client-side logger that batches logs and sends them 
-                        asynchronously to minimize network requests.
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">🧠</span>
+                    JavaScript & Data Structure Tasks
+                </h2>
+                <div class="questions-grid">
+                    <div class="question-card">
+                        <div class="difficulty hard">Hard</div>
+                        <div class="question-title">Q1: Privilege Management System</div>
+                        <div class="question-desc">
+                            Build a privilege management system with dependent permissions. 
+                            Handle parent-child relationships and automatic state synchronization.
+                        </div>
+                        <div class="time-estimate">⏱️ Estimated time: 40 minutes</div>
+                        <a href="js-privilege-management.html" class="question-link">Start Task</a>
                     </div>
-                    <div class="time-estimate">⏱️ Estimated time: 45 minutes</div>
-                    <a href="js-logger-batching.html" class="question-link">Start Task</a>
+                    
+                    <div class="question-card">
+                        <div class="difficulty hard">Hard</div>
+                        <div class="question-title">Q2: Client-Side Logger with Batching</div>
+                        <div class="question-desc">
+                            Implement an efficient client-side logger that batches logs and sends them 
+                            asynchronously to minimize network requests.
+                        </div>
+                        <div class="time-estimate">⏱️ Estimated time: 45 minutes</div>
+                        <a href="js-logger-batching.html" class="question-link">Start Task</a>
+                    </div>
                 </div>
             </div>
         </div>
