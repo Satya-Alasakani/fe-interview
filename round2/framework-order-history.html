@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Framework Task: Order History Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .task-header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .task-title {
+            color: #2d3748;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .requirements {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .example-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            color: #2d3748;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        
+        /* Example Order History Layout */
+        .example-order-history {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 700px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            grid-template-rows: 1fr;
+        }
+        
+        .example-sidebar {
+            background: #f7fafc;
+            border-right: 1px solid #e2e8f0;
+            padding: 25px;
+        }
+        
+        .example-main {
+            padding: 25px;
+            background: white;
+            overflow-y: auto;
+        }
+        
+        .filter-section {
+            margin-bottom: 25px;
+        }
+        
+        .filter-title {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .filter-group {
+            margin-bottom: 20px;
+        }
+        
+        .filter-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+        
+        .filter-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        
+        .filter-checkbox {
+            margin-right: 8px;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .order-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .order-item {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .order-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .order-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .order-id {
+            font-weight: bold;
+            color: #3182ce;
+            font-size: 1.1rem;
+        }
+        
+        .order-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-delivered {
+            background: #c6f6d5;
+            color: #2f855a;
+        }
+        
+        .status-processing {
+            background: #feebc8;
+            color: #c05621;
+        }
+        
+        .status-cancelled {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        
+        .order-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .order-detail {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .order-detail-label {
+            color: #718096;
+            font-size: 0.8rem;
+            margin-bottom: 4px;
+        }
+        
+        .order-detail-value {
+            color: #2d3748;
+            font-weight: 500;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        .pagination-button {
+            padding: 8px 12px;
+            border: 1px solid #cbd5e0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .pagination-button:hover {
+            background: #f7fafc;
+        }
+        
+        .pagination-button.active {
+            background: #3182ce;
+            color: white;
+            border-color: #3182ce;
+        }
+        
+        .pagination-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .code-section {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .code-comment {
+            color: #68d391;
+        }
+        
+        .placeholder-area {
+            background: #fff5f5;
+            border: 2px dashed #fed7d7;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+            color: #a0aec0;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .example-order-history {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+            }
+            .example-sidebar {
+                max-height: 200px;
+                overflow-y: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="task-header">
+            <h1 class="task-title">⚛️ Framework Task: Order History Page</h1>
+            <p class="task-description" style="color: #4a5568; font-size: 1.1rem; margin: 20px 0;">
+                Implement an Order History page with sidebar filters and paginated order list. 
+                Design the component structure and define API endpoints.
+            </p>
+            
+            <div class="requirements">
+                <h3>📋 Requirements:</h3>
+                <ul style="color: #4a5568; margin-left: 20px;">
+                    <li>Sidebar with filters for Date Range and Order Status</li>
+                    <li>Main area with paginated list of orders</li>
+                    <li>Order cards showing key information and status</li>
+                    <li>Search functionality for order lookup</li>
+                    <li>Component structure and state management design</li>
+                    <li>API endpoint specification with expected format: GET /orders?status=&dateRange=</li>
+                    <li>Responsive design for mobile devices</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2 class="section-title">📖 Visual Mockup</h2>
+            <p style="color: #4a5568; margin-bottom: 20px;">
+                Here's what the order history page should look like:
+            </p>
+            
+            <div class="example-order-history">
+                <div class="example-sidebar">
+                    <div class="filter-section">
+                        <h3 class="filter-title">🔍 Filters</h3>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Search Orders</label>
+                            <input type="text" class="filter-input" placeholder="Order ID, product name...">
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Date Range</label>
+                            <input type="date" class="filter-input" style="margin-bottom: 8px;">
+                            <input type="date" class="filter-input">
+                        </div>
+                        
+                        <div class="filter-group">
+                            <div class="filter-label">Order Status</div>
+                            <div class="filter-option">
+                                <input type="checkbox" class="filter-checkbox" checked>
+                                <span>All Orders</span>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" class="filter-checkbox">
+                                <span>Processing</span>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" class="filter-checkbox">
+                                <span>Shipped</span>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" class="filter-checkbox">
+                                <span>Delivered</span>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" class="filter-checkbox">
+                                <span>Cancelled</span>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <div class="filter-label">Order Amount</div>
+                            <input type="range" class="filter-input" style="margin-bottom: 8px;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #718096;">
+                                <span>$0</span>
+                                <span>$1000+</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example-main">
+                    <div class="order-header">
+                        <h2 style="color: #2d3748;">Order History</h2>
+                        <div style="color: #718096; font-size: 0.9rem;">
+                            Showing 1-10 of 247 orders
+                        </div>
+                    </div>
+                    
+                    <div class="order-list">
+                        <div class="order-item">
+                            <div class="order-item-header">
+                                <div class="order-id">#ORD-2024-001</div>
+                                <div class="order-status status-delivered">Delivered</div>
+                            </div>
+                            <div class="order-details">
+                                <div class="order-detail">
+                                    <div class="order-detail-label">Date</div>
+                                    <div class="order-detail-value">Jan 15, 2024</div>
+                                </div>
+                                <div class="order-detail">
+                                    <div class="order-detail-label">Total</div>
+                                    <div class="order-detail-value">$149.99</div>
+                                </div>
+                                <div class="order-detail">
+                                    <div class="order-detail-label">Items</div>
+                                    <div class="order-detail-value">3 items</div>
+                                </div>
+                                <div class="order-detail">
+                                    <div class="order-detail-label">Delivery</div>
+                                    <div class="order-detail-value">Jan 18, 2024</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="order-item">
+                            <div class="order-item-header">
+                                <div class="order-id">#ORD-2024-002</div>
+                                <div class="order-status status-processing">Processing</div>
+                            </div>
+                            <div class="order-details">
+                                <div class="order-detail">
+                                    <div class="order-detail-label">Date</div>
+                                    <div class="order-detail-value">Jan 16, 2024</div>
+                                </div>
+                                <div class="order-detail">
+                                    <div class="order-detail-label">Total</div>
+                                    <div class="order-detail-value">$89.50</div>
+                                </div>
+                                <div class="order-detail">
+                                    <div class="order-detail-label">Items</div>
+                                    <div class="order-detail-value">2 items</div>
+                                </div>
+                                <div class="order-detail">
+                                    <div class="order-detail-label">Est. Delivery</div>
+                                    <div class="order-detail-value">Jan 20, 2024</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="order-item">
+                            <div class="order-item-header">
+                                <div class="order-id">#ORD-2024-003</div>
+                                <div class="order-status status-cancelled">Cancelled</div>
+                            </div>
+                            <div class="order-details">
+                                <div class="order-detail">
+                                    <div class="order-detail-label">Date</div>
+                                    <div class="order-detail-value">Jan 14, 2024</div>
+                                </div>
+                                <div class="order-detail">
+                                    <div class="order-detail-label">Total</div>
+                                    <div class="order-detail-value">$234.00</div>
+                                </div>
+                                <div class="order-detail">
+                                    <div class="order-detail-label">Items</div>
+                                    <div class="order-detail-value">1 item</div>
+                                </div>
+                                <div class="order-detail">
+                                    <div class="order-detail-label">Cancelled</div>
+                                    <div class="order-detail-value">Jan 15, 2024</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button class="pagination-button" disabled>« Previous</button>
+                        <button class="pagination-button active">1</button>
+                        <button class="pagination-button">2</button>
+                        <button class="pagination-button">3</button>
+                        <span style="color: #718096;">...</span>
+                        <button class="pagination-button">25</button>
+                        <button class="pagination-button">Next »</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2 class="section-title">🏗️ Component Architecture</h2>
+            <p style="color: #4a5568; margin-bottom: 20px;">
+                Design the component structure for your order history page:
+            </p>
+            
+            <div class="code-section">
+// Component Structure Example
+<span class="code-comment">// Main container component</span>
+OrderHistory/
+├── OrderHistoryPage.jsx
+├── components/
+│   ├── Sidebar/
+│   │   ├── FilterSidebar.jsx
+│   │   ├── DateRangeFilter.jsx
+│   │   ├── StatusFilter.jsx
+│   │   ├── SearchFilter.jsx
+│   │   └── index.js
+│   ├── OrderList/
+│   │   ├── OrderList.jsx
+│   │   ├── OrderItem.jsx
+│   │   ├── OrderStatus.jsx
+│   │   └── index.js
+│   ├── Pagination/
+│   │   ├── Pagination.jsx
+│   │   ├── PaginationButton.jsx
+│   │   └── index.js
+│   └── common/
+│       ├── LoadingSpinner.jsx
+│       └── EmptyState.jsx
+├── hooks/
+│   ├── useOrderFilters.js
+│   ├── useOrderPagination.js
+│   └── useOrderData.js
+└── services/
+    └── orderApi.js
+
+<span class="code-comment">// State Management Structure</span>
+const orderHistoryState = {
+  orders: [],
+  filters: {
+    search: '',
+    dateRange: { start: null, end: null },
+    status: [],
+    amountRange: { min: 0, max: 1000 }
+  },
+  pagination: {
+    currentPage: 1,
+    totalPages: 25,
+    itemsPerPage: 10,
+    totalItems: 247
+  },
+  loading: false,
+  error: null
+};
+            </div>
+            
+            <div class="placeholder-area">
+                <strong>TODO: Your Component Breakdown</strong><br>
+                Define your components, their props, and state management approach
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2 class="section-title">🔌 API Endpoints</h2>
+            <p style="color: #4a5568; margin-bottom: 20px;">
+                Define the API endpoints for order history functionality:
+            </p>
+            
+            <div class="code-section">
+<span class="code-comment">// Primary endpoint as specified in requirements</span>
+GET /orders?status=&dateRange=&page=1&limit=10&search=
+
+<span class="code-comment">// Additional useful endpoints</span>
+GET /orders/:orderId
+GET /orders/statuses        <span class="code-comment">// Get available status options</span>
+GET /orders/summary        <span class="code-comment">// Get order statistics</span>
+
+<span class="code-comment">// Example Request</span>
+GET /orders?status=delivered,processing&dateRange=2024-01-01,2024-01-31&page=1&limit=10&search=laptop
+
+<span class="code-comment">// Example Response</span>
+{
+  "orders": [
+    {
+      "id": "ORD-2024-001",
+      "status": "delivered",
+      "orderDate": "2024-01-15T10:30:00Z",
+      "deliveryDate": "2024-01-18T14:20:00Z",
+      "total": 149.99,
+      "currency": "USD",
+      "itemCount": 3,
+      "items": [
+        {
+          "id": "item123",
+          "name": "Wireless Headphones",
+          "quantity": 1,
+          "price": 99.99
+        },
+        {
+          "id": "item124",
+          "name": "Phone Case",
+          "quantity": 2,
+          "price": 25.00
+        }
+      ],
+      "shippingAddress": {
+        "street": "123 Main St",
+        "city": "New York",
+        "zipCode": "10001"
+      }
+    }
+  ],
+  "pagination": {
+    "currentPage": 1,
+    "totalPages": 25,
+    "itemsPerPage": 10,
+    "totalItems": 247,
+    "hasNext": true,
+    "hasPrevious": false
+  },
+  "filters": {
+    "availableStatuses": ["processing", "shipped", "delivered", "cancelled"],
+    "dateRange": {
+      "min": "2023-01-01",
+      "max": "2024-01-31"
+    }
+  }
+}
+            </div>
+            
+            <div class="placeholder-area">
+                <strong>TODO: Your API Design</strong><br>
+                Expand the API specification with error handling, validation, and additional endpoints
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2 class="section-title">💻 Implementation Tasks</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div style="background: #f7fafc; padding: 20px; border-radius: 8px;">
+                    <h4 style="color: #2d3748; margin-bottom: 10px;">1. Layout & Structure</h4>
+                    <ul style="color: #4a5568; font-size: 0.9rem;">
+                        <li>Create responsive sidebar and main layout</li>
+                        <li>Implement filter sidebar with form controls</li>
+                        <li>Build order list container</li>
+                        <li>Add pagination component</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #f7fafc; padding: 20px; border-radius: 8px;">
+                    <h4 style="color: #2d3748; margin-bottom: 10px;">2. Filtering & Search</h4>
+                    <ul style="color: #4a5568; font-size: 0.9rem;">
+                        <li>Implement date range picker</li>
+                        <li>Create status filter checkboxes</li>
+                        <li>Add search functionality</li>
+                        <li>Build amount range slider</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #f7fafc; padding: 20px; border-radius: 8px;">
+                    <h4 style="color: #2d3748; margin-bottom: 10px;">3. Data Management</h4>
+                    <ul style="color: #4a5568; font-size: 0.9rem;">
+                        <li>Design state management</li>
+                        <li>Implement API integration</li>
+                        <li>Handle loading and error states</li>
+                        <li>Add caching for performance</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #f7fafc; padding: 20px; border-radius: 8px;">
+                    <h4 style="color: #2d3748; margin-bottom: 10px;">4. User Experience</h4>
+                    <ul style="color: #4a5568; font-size: 0.9rem;">
+                        <li>Add order detail modals</li>
+                        <li>Implement export functionality</li>
+                        <li>Create empty states</li>
+                        <li>Add keyboard navigation</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="placeholder-area" style="margin-top: 30px;">
+                <strong>TODO: Your Implementation Plan</strong><br>
+                Create your order history page using React, Vue, or your preferred framework
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2 class="section-title">🎯 Success Criteria</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div>
+                    <h4 style="color: #2d3748; margin-bottom: 15px;">Functionality</h4>
+                    <ul style="color: #4a5568;">
+                        <li>✅ Filters work and update results</li>
+                        <li>✅ Pagination handles large datasets</li>
+                        <li>✅ Search returns relevant results</li>
+                        <li>✅ Order details are clearly displayed</li>
+                        <li>✅ Mobile responsive design</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: #2d3748; margin-bottom: 15px;">Architecture</h4>
+                    <ul style="color: #4a5568;">
+                        <li>✅ Modular component structure</li>
+                        <li>✅ Efficient state management</li>
+                        <li>✅ Clean API integration</li>
+                        <li>✅ Proper error handling</li>
+                        <li>✅ Performance optimizations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="index.html" style="display: inline-block; background: #4a5568; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+                ← Back to Dashboard
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

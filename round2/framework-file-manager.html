@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Framework Task: File Manager Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .task-header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .task-title {
+            color: #2d3748;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .requirements {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .example-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            color: #2d3748;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        
+        /* Example File Manager Layout */
+        .example-file-manager {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 600px;
+            display: grid;
+            grid-template-areas: 
+                "sidebar toolbar"
+                "sidebar main";
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: 60px 1fr;
+        }
+        
+        .example-sidebar {
+            grid-area: sidebar;
+            background: #f7fafc;
+            border-right: 1px solid #e2e8f0;
+            padding: 20px;
+        }
+        
+        .example-toolbar {
+            grid-area: toolbar;
+            background: #2d3748;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .example-main {
+            grid-area: main;
+            padding: 20px;
+            background: white;
+            overflow-y: auto;
+        }
+        
+        .folder-tree {
+            font-size: 0.9rem;
+        }
+        
+        .folder-item {
+            padding: 8px 0;
+            color: #4a5568;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .folder-item:hover {
+            color: #3182ce;
+        }
+        
+        .folder-item.active {
+            color: #3182ce;
+            font-weight: bold;
+        }
+        
+        .toolbar-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .toolbar-button:hover {
+            background: #3182ce;
+        }
+        
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .file-item {
+            background: #f7fafc;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .file-item:hover {
+            border-color: #4299e1;
+            transform: translateY(-2px);
+        }
+        
+        .file-item.selected {
+            border-color: #3182ce;
+            background: #ebf8ff;
+        }
+        
+        .file-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+        
+        .file-name {
+            font-size: 0.8rem;
+            color: #2d3748;
+            font-weight: 500;
+        }
+        
+        .checkbox {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
+        
+        .file-item {
+            position: relative;
+        }
+        
+        .code-section {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .code-comment {
+            color: #68d391;
+        }
+        
+        .placeholder-area {
+            background: #fff5f5;
+            border: 2px dashed #fed7d7;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+            color: #a0aec0;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .example-file-manager {
+                grid-template-areas: 
+                    "toolbar"
+                    "main";
+                grid-template-columns: 1fr;
+                grid-template-rows: 60px 1fr;
+            }
+            .example-sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="task-header">
+            <h1 class="task-title">⚛️ Framework Task: File Manager Interface</h1>
+            <p class="task-description" style="color: #4a5568; font-size: 1.1rem; margin: 20px 0;">
+                Create a File Manager page with sidebar folder tree and main grid view of files. 
+                Include checkbox selection, toolbar actions, and design the component architecture.
+            </p>
+            
+            <div class="requirements">
+                <h3>📋 Requirements:</h3>
+                <ul style="color: #4a5568; margin-left: 20px;">
+                    <li>Sidebar with expandable folder tree navigation</li>
+                    <li>Main area with grid view of files and folders</li>
+                    <li>Checkbox selection for multiple files</li>
+                    <li>Toolbar with action buttons (upload, delete, etc.)</li>
+                    <li>Component breakdown and architecture design</li>
+                    <li>API endpoint specifications</li>
+                    <li>Responsive design for mobile devices</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2 class="section-title">📖 Visual Mockup</h2>
+            <p style="color: #4a5568; margin-bottom: 20px;">
+                Here's what the file manager interface should look like:
+            </p>
+            
+            <div class="example-file-manager">
+                <div class="example-sidebar">
+                    <h4 style="margin-bottom: 15px; color: #2d3748;">📁 Folders</h4>
+                    <div class="folder-tree">
+                        <div class="folder-item active">
+                            📁 Documents
+                        </div>
+                        <div class="folder-item" style="margin-left: 20px;">
+                            📁 Projects
+                        </div>
+                        <div class="folder-item" style="margin-left: 40px;">
+                            📁 Web Apps
+                        </div>
+                        <div class="folder-item" style="margin-left: 40px;">
+                            📁 Mobile Apps
+                        </div>
+                        <div class="folder-item" style="margin-left: 20px;">
+                            📁 Reports
+                        </div>
+                        <div class="folder-item">
+                            📁 Downloads
+                        </div>
+                        <div class="folder-item">
+                            📁 Pictures
+                        </div>
+                        <div class="folder-item">
+                            📁 Music
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example-toolbar">
+                    <button class="toolbar-button">📤 Upload</button>
+                    <button class="toolbar-button">📁 New Folder</button>
+                    <button class="toolbar-button">🗑️ Delete</button>
+                    <button class="toolbar-button">📋 Copy</button>
+                    <button class="toolbar-button">✂️ Move</button>
+                    <span style="margin-left: auto; font-size: 0.9rem;">3 items selected</span>
+                </div>
+                
+                <div class="example-main">
+                    <div class="file-grid">
+                        <div class="file-item selected">
+                            <input type="checkbox" class="checkbox" checked>
+                            <div class="file-icon">📊</div>
+                            <div class="file-name">report.xlsx</div>
+                        </div>
+                        <div class="file-item">
+                            <input type="checkbox" class="checkbox">
+                            <div class="file-icon">📄</div>
+                            <div class="file-name">document.pdf</div>
+                        </div>
+                        <div class="file-item selected">
+                            <input type="checkbox" class="checkbox" checked>
+                            <div class="file-icon">🖼️</div>
+                            <div class="file-name">image.jpg</div>
+                        </div>
+                        <div class="file-item">
+                            <input type="checkbox" class="checkbox">
+                            <div class="file-icon">📁</div>
+                            <div class="file-name">Projects</div>
+                        </div>
+                        <div class="file-item selected">
+                            <input type="checkbox" class="checkbox" checked>
+                            <div class="file-icon">💻</div>
+                            <div class="file-name">code.js</div>
+                        </div>
+                        <div class="file-item">
+                            <input type="checkbox" class="checkbox">
+                            <div class="file-icon">🎵</div>
+                            <div class="file-name">song.mp3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2 class="section-title">🏗️ Component Architecture</h2>
+            <p style="color: #4a5568; margin-bottom: 20px;">
+                Design the component structure for your file manager. Consider reusability and state management.
+            </p>
+            
+            <div class="code-section">
+// Component Structure Example
+<span class="code-comment">// Main container component</span>
+FileManager/
+├── FileManagerLayout.jsx
+├── components/
+│   ├── Sidebar/
+│   │   ├── FolderTree.jsx
+│   │   ├── FolderItem.jsx
+│   │   └── index.js
+│   ├── Toolbar/
+│   │   ├── ActionToolbar.jsx
+│   │   ├── ToolbarButton.jsx
+│   │   └── index.js
+│   ├── FileGrid/
+│   │   ├── FileGrid.jsx
+│   │   ├── FileItem.jsx
+│   │   ├── FileIcon.jsx
+│   │   └── index.js
+│   └── common/
+│       ├── Checkbox.jsx
+│       └── Modal.jsx
+├── hooks/
+│   ├── useFileSelection.js
+│   ├── useFileOperations.js
+│   └── useFileTree.js
+└── services/
+    └── fileApi.js
+
+<span class="code-comment">// State Management Structure</span>
+const fileManagerState = {
+  currentFolder: '/documents',
+  selectedFiles: ['file1.pdf', 'file2.jpg'],
+  files: [...],
+  folders: [...],
+  loading: false,
+  error: null
+};
+            </div>
+            
+            <div class="placeholder-area">
+                <strong>TODO: Your Component Breakdown</strong><br>
+                List your components, their responsibilities, and how they interact
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2 class="section-title">🔌 API Endpoints</h2>
+            <p style="color: #4a5568; margin-bottom: 20px;">
+                Define the API endpoints needed for file operations:
+            </p>
+            
+            <div class="code-section">
+<span class="code-comment">// File Management API</span>
+GET    /api/files?folder=/documents&page=1&limit=50
+POST   /api/files/upload
+DELETE /api/files/:fileId
+PUT    /api/files/:fileId/move
+POST   /api/files/:fileId/copy
+GET    /api/folders/tree
+POST   /api/folders/create
+DELETE /api/folders/:folderId
+
+<span class="code-comment">// Example Response</span>
+{
+  "files": [
+    {
+      "id": "file123",
+      "name": "document.pdf",
+      "type": "application/pdf",
+      "size": 1024000,
+      "created": "2024-01-15T10:30:00Z",
+      "modified": "2024-01-15T10:30:00Z",
+      "path": "/documents/document.pdf"
+    }
+  ],
+  "folders": [
+    {
+      "id": "folder456",
+      "name": "Projects",
+      "path": "/documents/projects",
+      "created": "2024-01-10T09:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 150,
+    "page": 1,
+    "limit": 50,
+    "hasNext": true
+  }
+}
+            </div>
+            
+            <div class="placeholder-area">
+                <strong>TODO: Your API Design</strong><br>
+                Specify additional endpoints, request/response formats, and error handling
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2 class="section-title">💻 Implementation Tasks</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div style="background: #f7fafc; padding: 20px; border-radius: 8px;">
+                    <h4 style="color: #2d3748; margin-bottom: 10px;">1. Layout & Structure</h4>
+                    <ul style="color: #4a5568; font-size: 0.9rem;">
+                        <li>Create responsive grid layout</li>
+                        <li>Implement sidebar with folder tree</li>
+                        <li>Build main content area</li>
+                        <li>Add toolbar with actions</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #f7fafc; padding: 20px; border-radius: 8px;">
+                    <h4 style="color: #2d3748; margin-bottom: 10px;">2. File Operations</h4>
+                    <ul style="color: #4a5568; font-size: 0.9rem;">
+                        <li>Implement file selection</li>
+                        <li>Add upload functionality</li>
+                        <li>Create delete confirmation</li>
+                        <li>Build copy/move operations</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #f7fafc; padding: 20px; border-radius: 8px;">
+                    <h4 style="color: #2d3748; margin-bottom: 10px;">3. State Management</h4>
+                    <ul style="color: #4a5568; font-size: 0.9rem;">
+                        <li>Design state structure</li>
+                        <li>Implement selection logic</li>
+                        <li>Handle loading states</li>
+                        <li>Add error handling</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #f7fafc; padding: 20px; border-radius: 8px;">
+                    <h4 style="color: #2d3748; margin-bottom: 10px;">4. User Experience</h4>
+                    <ul style="color: #4a5568; font-size: 0.9rem;">
+                        <li>Add keyboard shortcuts</li>
+                        <li>Implement drag & drop</li>
+                        <li>Create context menus</li>
+                        <li>Add search functionality</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="placeholder-area" style="margin-top: 30px;">
+                <strong>TODO: Your Implementation Plan</strong><br>
+                Create your file manager interface using React, Vue, or your preferred framework
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2 class="section-title">🎯 Success Criteria</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div>
+                    <h4 style="color: #2d3748; margin-bottom: 15px;">Functionality</h4>
+                    <ul style="color: #4a5568;">
+                        <li>✅ Folder tree navigation works</li>
+                        <li>✅ File selection and deselection</li>
+                        <li>✅ Toolbar actions are functional</li>
+                        <li>✅ Responsive design implementation</li>
+                        <li>✅ Error handling and loading states</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: #2d3748; margin-bottom: 15px;">Architecture</h4>
+                    <ul style="color: #4a5568;">
+                        <li>✅ Clean component structure</li>
+                        <li>✅ Proper state management</li>
+                        <li>✅ Reusable components</li>
+                        <li>✅ Well-defined API contracts</li>
+                        <li>✅ Performance considerations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="index.html" style="display: inline-block; background: #4a5568; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+                ← Back to Dashboard
+            </a>
+        </div>
+    </div>
+</body>
+</html> 
